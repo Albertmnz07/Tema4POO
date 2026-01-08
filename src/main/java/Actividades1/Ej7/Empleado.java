@@ -17,6 +17,9 @@ public class Empleado {
     private LocalDate fechaNacimiento , fechaAntiguedad;
     private Departamento departamento;
     private int salarioAnual;
+    
+    private static Departamento[] departamentos = Departamento.values();
+    private static int[] empleadosDepartamento = new int[departamentos.length];
 
     public Empleado(String nombre, String direccion, String DNI, LocalDate fechaNacimiento, LocalDate fechaAntiguedad, Departamento departamento, int salarioAnual) {
         this.nombre = nombre;
@@ -26,6 +29,7 @@ public class Empleado {
         this.fechaAntiguedad = fechaAntiguedad;
         this.departamento = departamento;
         this.salarioAnual = salarioAnual;
+        actualizarEmpleados(departamento);
     }
   
     public Empleado(String nombre , String direccion , LocalDate fechaNacimiento){
@@ -54,7 +58,30 @@ public class Empleado {
         return departamento.equals(Departamento.INF) && salarioAnual <= 2000;
     }
     
+    public static void MuestraNumTrabajadores(){
+        for (int i = 0; i < departamentos.length; i++) {
+            System.out.println(departamentos[i].name() + ": " + empleadosDepartamento[i]);
+        }
+    }
     
+    public double calcularSalarioMensual(){
+        return this.salarioAnual / 12;
+    }
+    
+    public boolean posibilidadAscenso(){
+        return getAnosEmpresa() > 4 && getEdad() > 40;
+    }
+    
+    private void actualizarEmpleados(Departamento departamento){
+        for (int i = 0; i < departamentos.length; i++) {
+            if (departamentos[i].equals(departamento)){
+                empleadosDepartamento[i]++;
+                return;
+                
+            }
+        }
+        
+    }
     
     
     public String toString(){
